@@ -40,8 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
 
+    'bootstrap3',
+
     'blog',
     'taggit',
+
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +134,9 @@ EMAIL_HOST_USER = 'your_account@gmail.com'
 EMAIL_HOST_PASSWORD = 'your_password'
 EMAIL_PORT = 587
 EMAIL_USE_TLS= True
+
+
+# django-bootstrap3的设置
+BOOTSTRAP3 = {
+'include_jquery': True,
+}
