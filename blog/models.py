@@ -32,6 +32,9 @@ class Post(models.Model):
 	# 帖子的状态
 	status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='draft')
 
+	# 将数据关联到提交他的用户
+	owner = models.ForeignKey(User)
+
 	objects = models.Manager()	#默认管理器
 	Published = PublishedManager()
 	# taggit提供的标签管理器

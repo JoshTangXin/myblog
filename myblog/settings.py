@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
 
     'bootstrap3',
-
     'blog',
     'taggit',
 
@@ -127,6 +126,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'collectstatic')
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
+LOGIN_URL = '/users/login/'
+# django-bootstrap3的设置
+BOOTSTRAP3 = {
+'include_jquery': True,
+}
 
 #EMAIL
 EMAIL_HOST = 'smtp.gmail.com'
@@ -134,9 +141,3 @@ EMAIL_HOST_USER = 'your_account@gmail.com'
 EMAIL_HOST_PASSWORD = 'your_password'
 EMAIL_PORT = 587
 EMAIL_USE_TLS= True
-
-
-# django-bootstrap3的设置
-BOOTSTRAP3 = {
-'include_jquery': True,
-}

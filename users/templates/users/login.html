@@ -1,20 +1,42 @@
+{% load staticfiles %}
 {% load bootstrap3 %}
 
-{% block header %}
-  <h2>Log in to your account.</h2>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{% block content %}
 
-  <form method="post" action="{% url 'users:login' %}" class="form">
-    {% csrf_token %}
-    {% bootstrap_form form %}
+    <title>Blog login</title>
 
-    {% buttons %}
-      <button name="submit" class="btn btn-primary">log in</button>
-    {% endbuttons %}
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
 
-    <input type="hidden" name="next" value="{% url 'blog:post_list' %}" />
-  </form>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'bootstrap/css/signin.css' %}" rel="stylesheet">
 
-{% endblock content %}
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <form class="form-signin" action="{% url 'users:login' %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+        <input type="hidden" name="next" value="{% url 'blog:post_list' %}" />
+      </form>
+
+        <div class="form-signin">
+          <a href="{% url 'users:register' %}" style="text-decoration:none"><button class=" btn btn-lg btn-primary btn-block" type="submit">register</button></a>
+        </div>
+
+    </div>
+
+  </body>
+</html>

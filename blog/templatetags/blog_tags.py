@@ -28,13 +28,9 @@ def get_most_commented_posts(count=5):
 		total_comments=Count('comments')
 	).order_by('-total_comments')[:count]
 
-
 @register.assignment_tag
 def get_less_commented_posts(count=3):
-	return Post.Published.annotate(
-		total_comments=Count('comments')
-	).order_by('total_comments')[:count]
-
+    return Post.Published.annotate(total_comments=Count('comments')).order_by('total_comments')[:count]
 
 # 自定义模板过滤器
 @register.filter(name='markdown')

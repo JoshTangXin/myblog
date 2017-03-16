@@ -3,14 +3,18 @@ from django.http import HttpResponse
 from .models import *
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from django.views.generic import ListView
-from .forms import EmailPostForm,CommentForm
+from .forms import EmailPostForm,CommentForm,BlogForm
 from django.core.mail import send_mail
 from taggit.models import Tag
 from django.db.models import Count
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect,Http404 ,HttpResponse
 
 # Create your views here.
+# 需要在setting.py中设置LOGIN_URL
+@login_required
 def post_list(request,tag_slug=None):
-	posts = Post.Published.all()
+	posts = Post.Published.filter(owner=request.user)
 	tag=None
 	# 实现标签系统 tag
 	if tag_slug:
@@ -30,6 +34,7 @@ def post_list(request,tag_slug=None):
 	context = {'posts':posts,'page':page,'tag':tag}
 	return render(request,'blog/list.html',context)
 
+@login_required
 def post_detail(request,year,month,day,post):
 	post = get_object_or_404(Post,
 							 slug=post,
@@ -67,6 +72,7 @@ class PostListView(ListView):
 	template_name = 'blog/list.html'
 
 # 可以通过邮件分享
+@login_required
 def post_share(request,post_id):
 	post=get_object_or_404(Post,id=post_id,status='published')
 	sent=False
@@ -83,3 +89,20 @@ def post_share(request,post_id):
 	else:
 		form = EmailPostForm()
 	return render(request, 'blog/share.html', {'post': post, 'form': form, 'sent': sent})
+
+@login_required
+def new_blog(request):
+#	post=Post.objects.get(id='author_id')
+	if request.method != 'POST':
+		form = BlogForm()
+	else:
+		form = BlogForm(request.POST)
+		if form.is_valid():
+			new_form = form.save(commit=False)
+			new_form.owner=request.user
+			new_form.author=request.user
+			new_form.save()
+			return HttpResponseRedirect(reverse('blog:post_list'))
+
+	context={'form':form}
+	return render(request, 'blog/new_blog.html',context)

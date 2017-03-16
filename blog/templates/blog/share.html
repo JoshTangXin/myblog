@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load bootstrap3 %}
 
 {% block title %} Share a post {% endblock %}
 
@@ -11,9 +12,12 @@
   {% else %}
       <h1>Share "{{ post.title}}" by e-mail</h1>
       <form action="." method='post'>
-        {{ form.as_p}}
         {% csrf_token %}
-        <input type="submit" value="send e-mmail"}/>
+        {% bootstrap_form form %}
+     {% buttons %}
+         <button name="submit" class="btn btn-primary">Send e-mmail</button>
+    {% endbuttons %}
+
       </form>
   {% endif %}
 {% endblock  %}

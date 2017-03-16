@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 # 注销用户
 def logout_view(request):
 	logout(request)
-	return HttpResponseRedirect(reverse('blog:post_list'))
+	return HttpResponseRedirect(reverse('users:login'))
 
 def register(request):
 
@@ -22,7 +22,7 @@ def register(request):
 			#注册成功就让用户自动登录
 			authenticate_user=authenticate(username = new_user.username,password = request.POST['password1'])
 			login(request,authenticate_user)
-			return HttpResponseRedirect(reverse('learning_logs:index'))
+			return HttpResponseRedirect(reverse('blog:post_list'))
 
 	context={'form':form}
 	return render(request, 'users/register.html', context)
