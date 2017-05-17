@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'taggit',
 
     'users',
+
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'myblog.urls'
@@ -127,7 +130,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'collectstatic')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+#STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "blog/static"),
+)
 
 LOGIN_URL = '/users/login/'
 # django-bootstrap3的设置
@@ -141,3 +148,8 @@ EMAIL_HOST_USER = 'your_account@gmail.com'
 EMAIL_HOST_PASSWORD = 'your_password'
 EMAIL_PORT = 587
 EMAIL_USE_TLS= True
+
+
+# for django-debug-toolbar
+INTERNAL_IPS = ('127.0.0.1',)
+DEBUG_TOOLBAR_CONFIG = {  'JQUERY_URL' : r"http://code.jquery.com/jquery-2.1.1.min.js"}

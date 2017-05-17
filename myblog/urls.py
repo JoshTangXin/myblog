@@ -19,6 +19,8 @@ from django.contrib import admin
 from blog.sitemaps import PostSitemap
 from django.contrib.sitemaps.views import sitemap
 
+from myblog.settings import DEBUG
+
 sitemaps={
     'posts': PostSitemap,
 }
@@ -28,4 +30,12 @@ urlpatterns = [
     url(r'^blog/', include('blog.urls',namespace='blog')),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps':sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     url(r'^users/', include('users.urls', namespace='users')),
+
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
+
+
+#for django-debug-toolbar  static file
+if DEBUG:
+    import debug_toolbar
+    urlpatterns.append(url(r'^__debug__/', include(debug_toolbar.urls)))
