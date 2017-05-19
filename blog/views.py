@@ -16,6 +16,8 @@ from django.http import HttpResponseRedirect,Http404 ,HttpResponse
 def post_list(request,tag_slug=None):
 	posts = Post.Published.filter(owner=request.user)
 	tag=None
+
+	total_posts = posts.count()
 	# 实现标签系统 tag
 	if tag_slug:
 		tag=get_object_or_404(Tag,slug=tag_slug)
@@ -31,7 +33,7 @@ def post_list(request,tag_slug=None):
 	except EmptyPage:
 		posts = paginator.page(paginator.num_pages)
 
-	context = {'posts':posts,'page':page,'tag':tag}
+	context = {'posts':posts,'page':page,'tag':tag,'total_posts':total_posts}
 	return render(request,'blog/list.html',context)
 
 @login_required
