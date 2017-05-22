@@ -6,7 +6,8 @@
 ![myblog login](https://raw.githubusercontent.com/JoshTangXin/myblog/master/images/login.PNG)
 ------
 ![myblog](https://raw.githubusercontent.com/JoshTangXin/myblog/master/images/blog.PNG)
-
+------
+![myblog](https://raw.githubusercontent.com/JoshTangXin/myblog/master/images/rest.PNG)
 ------
 ```
 Note:You need django-debug-toolbar（pip install django-debug-toolbar）
