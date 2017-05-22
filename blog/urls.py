@@ -17,4 +17,5 @@ urlpatterns = [
 
     url(r'^new_blog/$', views.new_blog, name='new_blog'),
 
+    url(r'^api/$', views.comment_list, name='comment_list'),
 ]
