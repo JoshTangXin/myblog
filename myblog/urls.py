@@ -30,8 +30,6 @@ urlpatterns = [
     url(r'^blog/', include('blog.urls',namespace='blog')),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps':sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     url(r'^users/', include('users.urls', namespace='users')),
-
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 
 

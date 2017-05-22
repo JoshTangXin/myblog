@@ -10,6 +10,12 @@ from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect,Http404 ,HttpResponse
 
+import json
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
+from blog.serializer import CommentSerializer
+
 # Create your views here.
 # 需要在setting.py中设置LOGIN_URL
 @login_required
@@ -108,3 +114,18 @@ def new_blog(request):
 
 	context={'form':form}
 	return render(request, 'blog/new_blog.html',context)
+
+@api_view(['GET','POST'])
+def comment_list(request):
+	if request.method == "GET":
+		comments = Comment.objects.all()
+		serializer = CommentSerializer(comments, many=True)
+		return Response(serializer.data)
+
+	elif request.method == "PSOT":
+		serializer = CommentSerializer(data=json.loads(request.body))
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
+		else:
+			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
